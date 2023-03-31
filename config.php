@@ -168,15 +168,6 @@ function ForConversion(int $byte, string $one = 'MB') {
 
 # ----------------- [ <- keyboard -> ] ----------------- #
 
-$panel = json_encode(['keyboard' => [
-    
-    [['text' => '👤 آمار کلی ربات']],
-    [['text' => '➕ افزودن پنل'], ['text' => '✏️ مدیریت پنل ها']],
-    [['text' => '📫 فوروارد همگانی'], ['text' => '📫 ارسال همگانی']],
-    [['text' => '🔙 بازگشت به صفحه اصلی']],
-    
-], 'resize_keyboard' => true]);
-
 if($from_id == $bot['admin']){
     
     $panel_key = json_encode(['keyboard' => [
@@ -186,6 +177,15 @@ if($from_id == $bot['admin']){
     ], 'resize_keyboard' => true]);
     
 }
+
+$panel = json_encode(['keyboard' => [
+    
+    [['text' => '👤 آمار کلی ربات']],
+    [['text' => '➕ افزودن پنل'], ['text' => '✏️ مدیریت پنل ها']],
+    [['text' => '📫 فوروارد همگانی'], ['text' => '📫 ارسال همگانی']],
+    [['text' => '🔙 بازگشت به صفحه اصلی']],
+    
+], 'resize_keyboard' => true]);
 
 $back = json_encode(['keyboard' => [
     
@@ -214,15 +214,3 @@ if ($user_sql) {
   // Handle database connection error
   die("Database connection error: " . $connect->connect_error);
 }
-
-
-
-
-
-
-
-
-
-
-
-
