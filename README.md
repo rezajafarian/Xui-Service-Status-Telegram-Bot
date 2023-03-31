@@ -1,9 +1,10 @@
 ### Xui-Service-Status-Telegram-Bot
 
-# X-ui Conection Status Bot
-
 ## X-ui GitGub
 - [X-ui Git](https://github.com/vaxilu/x-ui)
+
+## Example Of A Running Robot
+ - https://t.me/XuiInfoBot
 
 ## How To Run Bot 
 
