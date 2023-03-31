@@ -4,7 +4,7 @@
 - [X-ui Git](https://github.com/vaxilu/x-ui)
 
 ## Example Of A Running Robot
- - https://t.me/XuiInfoBot
+ - [Click To Go The Bot](https://t.me/XuiInfoBot)
 
 ## How To Run Bot 
 
@@ -26,3 +26,8 @@
 - SetWebHook File -> https://domin.com/folder/index.php
 - CronJob File -> https://domin.com/folder/lib/send.php [ 1 minute ]
 - Run File -> https://domin.com/folder/sql/sql.php
+
+---
+
+## To receive notifications, subscribe to the following Telegram channel (also to support us):
+ - [Click To Join](https://t.me/rezajafarian_git_channel)
