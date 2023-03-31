@@ -10,15 +10,15 @@ $date = jdate('Y/m/d');
 
 $bot = [
 
-    'token' => '6264764025:AAGups2hSzW8lYcD9IGcTxc194Vvb-w9Q1I',
-    'admin' => 5068240372,
+    'token' => 'NULL', # set token
+    'admin' => 0000, # set admin id
     'domin' => str_replace('/' . explode('/', $_SERVER['SCRIPT_NAME'])[2], null, $_SERVER['SCRIPT_URI']),
-    'username' => '@XuiInfoBot',
+    'username' => 'NULL', # set bot username
     
     'database' => [
-        'db_name' => 'bottelegrammrbot_info',
-        'db_username' => 'bottelegrammrbot_info',
-        'db_password' => 'reza1385reza',
+        'db_name' => 'NULL', # set db name
+        'db_username' => 'NULL', # et db username
+        'db_password' => 'NULL', # set db password
     ],
    
 ];
