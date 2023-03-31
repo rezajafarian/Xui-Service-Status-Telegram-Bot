@@ -27,7 +27,15 @@
 - CronJob File -> https://domin.com/folder/lib/send.php [ 1 minute ]
 - Run File -> https://domin.com/folder/sql/sql.php
 
+## Options
+
+ - statistics
+ - add panel
+ - manage panel ( multi panel )
+ - send / forward message
+
 ---
 
 ## To receive notifications, subscribe to the following Telegram channel (also to support us):
+
  - [Click To Join](https://t.me/rezajafarian_git_channel)
