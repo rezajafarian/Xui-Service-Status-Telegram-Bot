@@ -1,7 +1,6 @@
 <?php
 
 include_once 'config.php';
-include_once 'other/rezajafarian.php';
 
 if($text == '/start' or $text == '⬅️ برگشت' or $text == '🔙 بازگشت به صفحه اصلی'){
 
@@ -50,11 +49,11 @@ if ($step == 'information' && $text != '/start' && $text != '/panel' && $text !=
         sendmessage($from_id, "❌ اشتراک ارسالی شما معتبر نیست.");
         exit();
     }
-
+    
     $url = "{$bot['domin']}/lib/web.php?domin={$info['domain']}&step=status&name={$info['name']}&protocol=$protocol";
     $get = json_decode(file_get_contents($url), true);
 
-    if (isset($get['ok']) && !$get['results']) {
+    if (isset($get['success']) && $get['success'] == false) {
         sendmessage($from_id, "❌ اشتراک ارسالی شما یافت نشد.");
         exit();
     }
