@@ -25,8 +25,12 @@ $session = $panel['session'];
 $info = new Info($ip, $port, $domin, $ssl, $session);
 
 if($_GET['step'] == 'status' && isset($_GET['name'])) {
-    $information = $info->ServiceStatus($_GET['name']) != null ? $info->ServiceStatus($_GET['name']) : 'service not found';
-    exit(json_encode(['success' => true, 'results' => $information, 'status_code' => 200], 448));
+    $information = $info->ServiceStatus($_GET['name']);
+    if(is_null($information)){
+        exit(json_encode(['success' => false, 'results' => 'service not found', 'status_code' => 404], 448));
+    }else{
+        exit(json_encode(['success' => true, 'results' => $information, 'protocol' => $_GET['[protocol'], 'status_code' => 200], 448));
+    }
 } else {
     exit(json_encode(['success' => false, 'msg' => 'invalid step or name parameter', 'status_code' => 400], 448));
 }
