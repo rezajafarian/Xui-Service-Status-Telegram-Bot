@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>message</title>
+    <meta name=" theme-color" content="#1bb566">
+</head>
+
+<style>
+    .btn-modal{
+    background-color: #3295a8;
+    padding: 5px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #ffff;
+}
+
+.modal_window {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: white;
+    padding: 4em 2em;
+    border-radius: 10px;
+}
+.icon-success{
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border: 2px solid rgb(42, 200, 42);
+    border-radius: 100%;
+    color: rgb(42, 200, 42);
+    font-weight: bold;
+}
+#modal:not(:target) {
+    visibility: hidden;
+    opacity: 0;
+}
+</style>
+
+<body>
+    
+    <div class="modal_window">
+        <span class="icon-success">&#10003</span>
+        <h2>درخواست شما با موفقیت انجام شد</h2>
+    </div>
+
+
+</body>
+
+</html>

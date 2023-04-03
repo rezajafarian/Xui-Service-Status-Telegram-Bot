@@ -1,0 +1,46 @@
+body{color: rgb(255, 255, 255);
+background-color:#151e27;
+}
+select{width: 90px;}
+.inp{
+    border-width: 2px;
+    border-color: rgb(62, 62, 159);
+}
+.kol{ 
+    width: 400px;
+    margin-top: 3%;
+    background-color:#151e27 ;
+    padding: 4%;
+    border-radius: 10px;
+    border:solid 2px #4285f4;
+     box-shadow: 4px 4px 15px #8d929a, -3px -3px 15px rgb(16, 16, 111); 
+}
+.kk{background-color: #151e27;}
+
+
+
+input{ color: rgb(128, 128, 128);}
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color: rgb(143, 142, 142);
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: rgb(130, 128, 128);
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: rgb(128, 127, 127);
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: rgb(93, 92, 92);
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: rgb(140, 140, 140);
+}
+
+::placeholder { /* Most modern browsers support this now. */
+    color: rgb(125, 124, 124);
+}
+
+@media(max-width:410px){.kol{border: none; width: 310px; box-shadow: none;}}
