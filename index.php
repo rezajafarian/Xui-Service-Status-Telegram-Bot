@@ -2,6 +2,21 @@
 
 include_once 'config.php';
 
+$user_sql = $connect->query("SELECT `step` FROM `user` WHERE `from_id` = '$from_id' LIMIT 1");
+if ($user_sql) {
+  if ($user_sql->num_rows > 0) {
+    $user = $user_sql->fetch_assoc();
+    $step = $user['step'];
+  } else {
+    $connect->query("INSERT INTO `user`(`from_id`, `step`) VALUES ('$from_id', 'none')");
+  }
+} else {
+  // Handle database connection error
+  die("Database connection error: " . $connect->connect_error);
+}
+
+# ---------------------------------------------- #
+
 if($text == '/start' or $text == '⬅️ برگشت' or $text == '🔙 بازگشت به صفحه اصلی'){
 
     step('information');
@@ -109,118 +124,61 @@ elseif($from_id == $bot['admin']){
         
     }
     
-    elseif($text == '➕ افزودن پنل'){
-    
-    	step('add_panel');
-    	$txt = "◽️ لینک لاگین پنل خود را ارسال کنید :";
-    	sendmessage($from_id, $txt, $back);
-    	
-    }
-    
-    elseif($step == 'add_panel' and $text != '⬅️ برگشت'){
+    if ($text === '✏️ مدیریت پنل ها' || $data === 'back_panellist') {
         
-    	if(strpos($text, 'http') === false){
-    		step('add_panel');
-    		$txt = "❌ لینک ارسالی شما باید با http یا https باشد.";
-    		sendmessage($from_id, $txt, $back);
-    		exit();
-    	}
-    	
-    	step('send_user');
-    	file_put_contents('link.txt', str_replace([' ', "\n", "\t"], null, $text));
-    	$txt = "◽️ یوزرنیم پنل خود را ارسال کنید :";
-    	sendmessage($from_id, $txt, $back);
-    	
-    }
-    elseif($step == 'send_user' and $text != '⬅️ برگشت'){
+        $select = $connect->query('SELECT row, domin FROM `panels`');
         
-    	file_put_contents('username.txt', $text);
-    	step('send_pass');
-    	$txt = "◽️ پسورد پنل خود را ارسال کنید :";
-    	sendmessage($from_id, $txt, $back);
-    	
-    }
-    elseif($step == 'send_pass' and $text != '⬅️ برگشت'){
-        
-    	file_put_contents('password.txt', $text);
-    	step('send_domin');
-    	$txt = "◽️ دامین پنل را ارسال کنید :";
-    	sendmessage($from_id, $txt, $back);
-    	
-    }
-    elseif($step == 'send_domin' and $text != '⬅️ برگشت'){
-    	
-    	$server = file_get_contents('link.txt');
-    	$username = file_get_contents('username.txt');
-    	$password = file_get_contents('password.txt');
-    	$res = login($server, $username, $password, false);
-    	
-    	if(json_decode($res)->success == 1){
-    	    step('panel');
-    	    
-    	    $session = str_replace(["\t", "\n", " "], null, explode(' ', explode("session", file_get_contents('cookie.txt'))[1])[0]);
-    	    $connect->query("INSERT INTO `panels` (`login_link`, `username`, `password`, `domin`, `session`) VALUES ('$server', '$username', '$password', '$text', '$session')");
-    	    
-    		$txt = "✅ ربات با موفقیت بر پنل شما لاگین کرد.";
-    		sendmessage($from_id, $txt, $panel);
-    	}elseif(json_decode($res)->success == 0){
-            step('panel');
-    		$txt = "⚠️ یوزرنیم یا پسورد اشتباه است.";
-    		sendmessage($from_id, $txt, $panel);
-        }else{
-            step('panel');
-    		$txt = "⚠️ خطای ناشناخته ای یافت شد.";
-    		sendmessage($from_id, $txt, $panel);
-        }
-        
-        $files = ['link.txt', 'username.txt', 'password.txt', 'error_log'];
-        foreach($files as $name){
-            if(is_file($name)) unlink($name);
-        }
-        
-    }
-
-    
-    elseif($text == '✏️ مدیریت پنل ها' or $data == 'back_panellist'){
-        
-        $select = $connect->query("SELECT * FROM `panels`");
-        if($select->num_rows == 0){
-            sendmessage($from_id, "❌ لیست پنل های ربات خالی است !");
+        if ($select->num_rows === 0) {
+            sendmessage($from_id, '❌ لیست پنل های ربات خالی است !');
             exit();
         }
         
-        while($row = $select->fetch_assoc()){
-            $panels[] = [['text' => '🗑️', 'callback_data' => 'del-'.$row['row']], ['text' => $row['domin'], 'callback_data' => 'info-'.$row['row']]];    
+        $panels = [];
+        
+        while ($row = $select->fetch_assoc()) {
+            $panels[] = [
+              [
+                'text' => '🗑',
+                'callback_data' => 'del-'. $row['row']
+              ],
+              [
+                'text' => $row['domin'],
+                'callback_data' => 'info-'. $row['row']
+              ]
+            ];    
         }
         
-        if(!isset($data)){
-            sendmessage($from_id, "✏️ لیست پنل های شما به شرح زیر است ، از طریق دکمه های زیر میتوانید آن ها را مدیریت کنید :↓", json_encode(['inline_keyboard' => $panels]));
-        }else{
-            editmessage($from_id, "✏️ لیست پنل های شما به شرح زیر است ، از طریق دکمه های زیر میتوانید آن ها را مدیریت کنید :↓", $message_id, json_encode(['inline_keyboard' => $panels]));
+        $message = '✏️ لیست پنل های شما به شرح زیر است ، از طریق دکمه های زیر میتوانید آن ها را مدیریت کنید :↓';
+        $keyboard = json_encode(['inline_keyboard' => $panels]);
+        
+        if (!isset($data)) {
+            sendmessage($from_id, $message, $keyboard);
+        } else {
+            editmessage($from_id, $message, $message_id, $keyboard);
         }
     }
     
     if(isset($data)) {
-        
+        $id = explode('-', $data)[1];
+    
         if(strpos($data, 'del-') !== false) {
-            $id = explode('-', $data)[1];
-            $connect->query("DELETE FROM `panels` WHERE `row` = '$id' LIMIT 1");
-            $key = json_encode(['inline_keyboard' => [
-                [['text' => '🔎 بازگشت به لیست پنل ها', 'callback_data' => 'back_panellist']],
-            ]]);
+            $connect->query("DELETE FROM `panels` WHERE row = '$id' LIMIT 1");
+            $key = json_encode([
+                'inline_keyboard' => [
+                    [['text' => '🔎 بازگشت به لیست پنل ها', 'callback_data' => 'back_panellist']],
+                ]
+            ]);
+    
             editmessage($from_id, "✅ پنل انتخابی شما با موفقیت حذف شد.", $message_id, $key);
         }
-        
         elseif(strpos($data, 'info-') !== false) {
-            $id = explode('-', $data)[1];
-            $panel = $connect->query("SELECT `domin` FROM `panels` WHERE `row` = '$id' LIMIT 1")->fetch_assoc();
+            $panel = $connect->query("SELECT domin FROM `panels` WHERE row = '$id' LIMIT 1")->fetch_assoc();
             bot('AnswerCallbackQuery', [
                'callback_query_id' => $query_id,
                'text' => $panel['domin'],
                'show_alert' => true
             ]);
         }
-        
     }
 
     
@@ -272,7 +230,5 @@ elseif($from_id == $bot['admin']){
     }
     
 }
-
-#-----------------------------#
 
 ?>
