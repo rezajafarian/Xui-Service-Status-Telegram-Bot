@@ -13,7 +13,7 @@ $bot = [
     'token' => 'NULL', # set token
     'admin' => 0000, # set admin id
     'domin' => str_replace('/' . explode('/', $_SERVER['SCRIPT_NAME'])[2], null, $_SERVER['SCRIPT_URI']),
-    'username' => 'NULL', # set bot username
+    'username' => 'NULL', # set bot username (https://t.me/username)
     
     'database' => [
         'db_name' => 'NULL', # set db name
@@ -168,6 +168,15 @@ function ForConversion(int $byte, string $one = 'MB') {
 
 # ----------------- [ <- keyboard -> ] ----------------- #
 
+$panel = json_encode(['keyboard' => [
+    
+    [['text' => '👤 آمار کلی ربات']],
+    [['text' => '➕ افزودن پنل', 'web_app' => ['url' => $bot['domin'].'/html/login.html']], ['text' => '✏️ مدیریت پنل ها']],
+    [['text' => '📫 فوروارد همگانی'], ['text' => '📫 ارسال همگانی']],
+    [['text' => '🔙 بازگشت به صفحه اصلی']],
+    
+], 'resize_keyboard' => true]);
+
 if($from_id == $bot['admin']){
     
     $panel_key = json_encode(['keyboard' => [
@@ -177,15 +186,6 @@ if($from_id == $bot['admin']){
     ], 'resize_keyboard' => true]);
     
 }
-
-$panel = json_encode(['keyboard' => [
-    
-    [['text' => '👤 آمار کلی ربات']],
-    [['text' => '➕ افزودن پنل'], ['text' => '✏️ مدیریت پنل ها']],
-    [['text' => '📫 فوروارد همگانی'], ['text' => '📫 ارسال همگانی']],
-    [['text' => '🔙 بازگشت به صفحه اصلی']],
-    
-], 'resize_keyboard' => true]);
 
 $back = json_encode(['keyboard' => [
     
@@ -199,18 +199,5 @@ $back_panel = json_encode(['keyboard' => [
     
 ], 'resize_keyboard' => true]);
 
-# ----------------- [ <- others -> ] ----------------- #
 
-$user_sql = $connect->query("SELECT `step` FROM `user` WHERE `from_id` = '$from_id' LIMIT 1");
-if ($user_sql) {
-  if ($user_sql->num_rows > 0) {
-    $user = $user_sql->fetch_assoc();
-    $step = $user['step'];
-  } else {
-    $connect->query("INSERT INTO `user`(`from_id`, `step`) VALUES ('$from_id', 'none')");
-    $step = 'none';
-  }
-} else {
-  // Handle database connection error
-  die("Database connection error: " . $connect->connect_error);
-}
+
