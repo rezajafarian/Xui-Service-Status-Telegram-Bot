@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>add server</title>
+    <link href="bootstrap.rtl.css" rel="stylesheet" >
+   <link rel="stylesheet" href="login.css">
+   
+<body>
+    <div class="container kol ">
+        <form action="../login.php" method="POST">
+            <h6 class="form-label" style="direction: rtl;">نام سرور:</h6>
+            <input style="direction: rtl;" class="namesr form-control border-primary border-2 mb-4  j " type="text" id="name" name="name" placeholder="نام مستعار سرور">
+            <h6 style="direction: rtl;">لینک ورود :</h6>
+	
+            <div class="setai d-flex gap-1 ">
+                <select class="slct form-select border-primary border-2 bg-dark " style="color:rgb(192, 192, 192); ;" name="ssl" id="" >
+	                <option value="http">http</option>
+	                <option value="https">https</option>
+                </select>
+                <p style="font-size: large;">://</p>
+                <input class="add form-control border-primary border-2 j" type="text" name="ip" placeholder="1.1.1.1" required>
+                <p style="font-size: large;">:</p>
+	            <input class="port form-control border-primary border-2 j"  type="number" name="port" placeholder="port" required>
+	       </div>
+	
+	       <input  class="path form-control border-primary border-2 mt-3 " type="text" name="domain" placeholder="domain" required>
+	       <br>
+	       <h6 style="direction: rtl;">اطلاعات ورود:</h6>
+	       <input class="user form-control border-primary border-2 mb-4" type="text" name="username" placeholder="username">
+	       <input class="pass form-control border-primary border-2 mb-4" type="password" name="password" placeholder="password">
+	       <button class="container  d-flex justify-content-center btn btn-primary but"> افزودن سرور</button>
+            <h6 style="width: max-content;" class="container aa mt-3"></h6>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous">
+    </script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="login.js"></script>
+    
+</head>
+</body>
+</html>
